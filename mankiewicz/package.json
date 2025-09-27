@@ -1,0 +1,25 @@
+{
+  "name": "excel-formula-analyzer",
+  "version": "1.0.0",
+  "description": "Analyze and categorize Excel formulas by complexity",
+  "main": "excel-formula-analyzer.js",
+  "scripts": {
+    "start": "node excel-formula-analyzer.js",
+    "analyze": "node excel-formula-analyzer.js"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  },
+  "keywords": [
+    "excel",
+    "formulas",
+    "analysis",
+    "migration",
+    "complexity"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
