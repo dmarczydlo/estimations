@@ -131,64 +131,64 @@ A modern web application that replicates Excel functionality while providing:
 
 ```
                     PRIVATE SERVER VM (VMware)
-    ┌─────────────────────────────────────────────────────┐
-    │                Docker Containers                    │
-    │                                                     │
-    │  ┌─────────────┐    ┌─────────────┐                 │
-    │  │ Reverse     │    │ Frontend    │                 │
-    │  │ Proxy       │ ── │ App         │                 │
-    │  │ Nginx       │    │ Vue.js SPA  │                 │
-    │  │ Port:80/443 │ ┐  │ Port:80/443 │                 │
-    │  └─────────────┘ │  └─────────────┘                 │
-    │                  │                                  │
-    │                  │  ┌─────────────┐                 │
-    │                  └─ │ Backend API │                 │
-    │                     │ NestJS      │                 │
-    │                     │ Port: 3000  │                 │
-    │                     └──────┬──────┘                 │
-    │                            │                        │
-    │  ┌─────────────┐          │          ┌─────────────┐│
-    │  │ Database    │ ─────────┼───────── │ Cache       ││
-    │  │ PostgreSQL  │          │          │ Redis 7     ││
-    │  │ Port: 5432  │          │          │ Port: 6379  ││
-    │  └─────────────┘          │          └─────────────┘│
+    ┌──────────────────────────────────────────────────────┐
+    │                Docker Containers                     │
+    │                                                      │
+    │  ┌─────────────┐    ┌─────────────┐                  │
+    │  │ Reverse     │    │ Frontend    │                  │
+    │  │ Proxy       │ ── │ App         │                  │
+    │  │ Nginx       │    │ Vue.js SPA  │                  │
+    │  │ Port:80/443 │ ┐  │ Port:80/443 │                  │
+    │  └─────────────┘ │  └─────────────┘                  │
+    │                  │                                   │
+    │                  │  ┌─────────────┐                  │
+    │                  └─ │ Backend API │                  │
+    │                     │ NestJS      │                  │
+    │                     │ Port: 3000  │                  │
+    │                     └──────┬──────┘                  │
+    │                            │                         │
+    │  ┌─────────────┐           │         ┌─────────────┐ │
+    │  │ Database    │ ───────── ┼──────── │ Cache       │ │
+    │  │ PostgreSQL  │           │         │ Redis 7     │ │
+    │  │ Port: 5432  │           │         │ Port: 6379  │ │
+    │  └─────────────┘           │         └─────────────┘ │
     └────────────────────────────┼─────────────────────────┘
                                  │
                                  │ HTTPS/REST API
                                  ▼
-    ┌─────────────────────────────────────────────────────┐
-    │               External Systems                      │
-    ├─────────────┬─────────────┬─────────────┬───────────┤
-    │ MGX System  │ Mango DB    │ SAP ERP     │ Azure AD  │
-    │ REST API    │ Direct SQL  │ OData       │ OAuth 2.0 │
-    │ Port: 8080  │ Port: 1433  │ Port: 443   │ Port: 443 │
-    └─────────────┴─────────────┴─────────────┴───────────┘
+    ┌──────────────────────────────────────────────────────┐
+    │               External Systems                       │
+    ├─────────────┬─────────────┬─────────────┬────────────┤
+    │ MGX System  │ Mango DB    │ SAP ERP     │ Azure AD   │
+    │ REST API    │ Direct SQL  │ OData       │ OAuth 2.0  │
+    │ Port: 8080  │ Port: 1433  │ Port: 443   │ Port: 443  │
+    └─────────────┴─────────────┴─────────────┴────────────┘
 ```
 
 #### Detailed Application Architecture
 
 ```
                     Frontend Container
-    ┌─────────────────────────────────────────────┐
-    │            Presentation Layer               │
+    ┌──────────────────────────────────────────────┐
+    │            Presentation Layer                │
     │  ┌─────────────────┐ ┌─────────────────────┐ │
     │  │ Vue.js 3 SPA    │ │ Responsive UI       │ │
     │  │ TypeScript      │ │ PWA Ready           │ │
     │  │ i18n Support    │ │ Offline Capable     │ │
     │  └─────────────────┘ └─────────────────────┘ │
-    └─────────────────┬───────────────────────────┘
+    └─────────────────┬────────────────────────────┘
                       │ HTTPS/REST API
                       ▼
                 Backend Container
-    ┌─────────────────────────────────────────────┐
-    │              API Gateway Layer              │
+    ┌──────────────────────────────────────────────┐
+    │              API Gateway Layer               │
     │  ┌─────────────────┐ ┌─────────────────────┐ │
     │  │ NestJS Gateway  │ │ Request Validation  │ │
     │  │ JWT Auth        │ │ Rate Limiting       │ │
     │  │ TypeScript      │ │ CORS & Security     │ │
     │  └─────────────────┘ └─────────────────────┘ │
-    ├─────────────────────────────────────────────┤
-    │             Business Logic Layer            │
+    ├──────────────────────────────────────────────┤
+    │             Business Logic Layer             │
     │  ┌─────────────┐ ┌─────────────┐ ┌─────────┐ │
     │  │ Wizard      │ │ Calculation │ │ Export  │ │
     │  │ Engine      │ │ Engine      │ │ Service │ │
@@ -197,14 +197,14 @@ A modern web application that replicates Excel functionality while providing:
     │  │        External Integration             │ │
     │  │     MGX • Mango • SAP • Azure AD        │ │
     │  └─────────────────────────────────────────┘ │
-    ├─────────────────────────────────────────────┤
-    │              Data Access Layer              │
+    ├──────────────────────────────────────────────┤
+    │              Data Access Layer               │
     │  ┌─────────────────┐ ┌─────────────────────┐ │
     │  │ Kysely ORM      │ │ Connection Pool     │ │
     │  │ Type Safety     │ │ Health Checks       │ │
     │  │ Query Builder   │ │ Load Balancing      │ │
     │  └─────────────────┘ └─────────────────────┘ │
-    └─────────────────┬───┬───────────────────────┘
+    └─────────────────┬───┬────────────────────────┘
                       │   │
           ┌───────────┘   └───────────┐
           ▼                           ▼
