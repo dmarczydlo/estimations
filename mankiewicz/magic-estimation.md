@@ -8,7 +8,7 @@ This document provides a **rough estimation** for replacing the existing Excel w
 
 **Preferred Contract Type**: Time & Material
 
-**Key Recommendation**: **22 weeks (5.5 months)** with **305 person-days** and **5-person team**
+**Key Recommendation**: **24 weeks (6 months)** with **329 person-days** and **5-person team**
 
 ---
 
@@ -18,19 +18,17 @@ Based on comprehensive analysis of the MAGIC_V1.2.4c Excel workbook (analyzed Se
 
 ### Formula Complexity Breakdown
 
-| Complexity Level | Count     | Percentage | Migration Effort                           |
-| ---------------- | --------- | ---------- | ------------------------------------------ |
-| **Simple**       | 329       | 31.2%      | Low risk - 1-2 person-days per 10 formulas |
-| **Medium**       | 303       | 28.7%      | Medium risk - 0.5-1 person-day per formula |
-| **Complex**      | 424       | 40.2%      | High risk - 1-2 person-days per formula    |
-| **Total**        | **1,056** | **100%**   | **75-110 person-days**                     |
+| Complexity Level | Count | Percentage | Migration Effort                           |
+| ---------------- | ----- | ---------- | ------------------------------------------ |
+| **Simple**       | 329   | 31.2%      | Low risk - 1-2 person-days per 10 formulas |
+| **Medium**       | 303   | 28.7%      | Medium risk - 0.5-1 person-day per formula |
+| **Complex**      | 424   | 40.2%      | High risk - 1-2 person-days per formula    |
 
 ### Key Analysis Findings
 
 - **11 worksheets** with varying complexity levels
 - **24 unique Excel functions** including VLOOKUP (88 instances), IF (600 instances), IFERROR (291 instances)
 - **Top formula-heavy sheets**: Input (301 formulas), Input_Detail (180 formulas), Output_Data (160 formulas)
-- **Recommended phased approach**: MVP targeting 450 formulas (43% coverage) in first phase
 
 ### Migration Strategy Implications
 
@@ -74,11 +72,12 @@ A modern web application that replicates Excel functionality while providing:
 #### Core Functionality
 
 - **Authentication System**: Azure AD integration with JWT validation
-- **Input Wizards**: 4-step guided data collection process
+- **Input Wizards**: 4-step guided data collection process with session management
   - Step 1: Basic company/project information
-  - Step 2: Process steps definition (current vs proposed)
-  - Step 3: Material properties and specifications
-  - Step 4: Review, calculate, and export
+  - Step 2: Process steps definition (current vs proposed) + competitor comparison
+  - Step 3: Material properties and specifications + competitor comparison
+  - Step 4: Review, calculate, export + competitor comparison
+  - **Session Storage**: Auto-save progress, step recovery, validation persistence
 - **Calculation Engine**: Migration of core Excel formulas (~200 critical formulas)
 - **External Integrations**:
   - MGX system (REST API) - Customer and product master data
@@ -90,10 +89,12 @@ A modern web application that replicates Excel functionality while providing:
 #### Technical Deliverables
 
 - Responsive web application (desktop and tablet)
-- RESTful API backend
-- Database for storing calculations
+- RESTful API backend with session management
+- Database for storing calculations and user sessions
+- Cache layer for session storage and step recovery
 - Integration services for external systems
 - PowerPoint export service
+- Session management and recovery system
 - Basic monitoring and logging
 
 ### 🚫 **Excluded from MVP (Future Phases)**
@@ -149,7 +150,7 @@ A modern web application that replicates Excel functionality while providing:
     │                            │                         │
     │  ┌─────────────┐           │         ┌─────────────┐ │
     │  │ Database    │ ───────── ┼──────── │ Cache       │ │
-    │  │ PostgreSQL  │           │         │ Redis 7     │ │
+    │  │ PostgreSQL  │           │         │ Layer       │ │
     │  │ Port: 5432  │           │         │ Port: 6379  │ │
     │  └─────────────┘           │         └─────────────┘ │
     └────────────────────────────┼─────────────────────────┘
@@ -209,30 +210,38 @@ A modern web application that replicates Excel functionality while providing:
           ┌───────────┘   └───────────┐
           ▼                           ▼
     ┌─────────────┐             ┌─────────────┐
-    │ PostgreSQL  │             │   Redis 7   │
-    │ Main DB     │             │ Cache Store │
-    │ JSONB       │             │ Sessions    │
-    │ ACID        │             │ Rate Limits │
+    │ PostgreSQL  │             │ Cache Layer │
+    │ Main DB     │             │ Session     │
+    │ JSONB       │             │ Storage     │
+    │ ACID        │             │ Performance │
     │ Port: 5432  │             │ Port: 6379  │
     └─────────────┘             └─────────────┘
 ```
 
 ### Wizard Architecture & State Management
 
-#### Generic Wizard Framework
+#### Generic Wizard Framework with Session Storage
 
-The wizard system is designed as a generic, step-dependent framework where each step builds upon previous data:
+The wizard system is designed as a generic, step-dependent framework where each step builds upon previous data, with comprehensive session storage and recovery capabilities:
 
 ```
-                        Wizard State Machine
+                    Wizard State Machine with Caching
 
     ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
     │   Step 1    │ ── │   Step 2    │ ── │   Step 3    │ ── │   Step 4    │
-    │ Basic Data  │ ►  │ Process     │ ►  │ Material    │ ►  │ Review &    │
-    │ Collection  │    │ Definition  │    │ Properties  │    │ Calculate   │
+    │ Basic Data  │ ►  │ Process +   │ ►  │ Material +  │ ►  │ Review &    │
+    │ Collection  │    │ Competitor  │    │ Competitor  │    │ Calculate + │
+    │             │    │ Comparison  │    │ Comparison  │    │ Competitor  │
+    └──────┬──────┘    └──────┬──────┘    └──────┬──────┘    └──────┬──────┘
+           │                  │                  │                  │
+           ▼                  ▼                  ▼                  ▼
+    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+    │ SESSION     │    │ SESSION     │    │ SESSION     │    │ SESSION     │
+    │ CACHE       │    │ CACHE       │    │ CACHE       │    │ CACHE       │
+    │ Step 1 Data │    │ Steps 1-2   │    │ Steps 1-3   │    │ All Steps   │
     └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
-           │                   │                   │                   │
-           ▼                   ▼                   ▼                   ▼
+           │                  │                  │                  │
+           ▼                  ▼                  ▼                  ▼
     ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
     │ • Company   │    │ • Uses      │    │ • Uses      │    │ • Uses All  │
     │ • Location  │    │   Step 1    │    │   Step 1    │    │   Previous  │
@@ -240,15 +249,50 @@ The wizard system is designed as a generic, step-dependent framework where each 
     │   ID        │    │   Data      │    │ • External  │    │ • Validation│
     │ • Currency  │    │   Fetch     │    │   Data      │    │ • Export    │
     │ • Units     │    │ • Process   │    │ • Material  │    │   Results   │
-    │             │    │   Templates │    │   Rules     │    │             │
+    │             │    │   Templates │    │   Rules     │    │ • Competitor│
+    │             │    │ • Competitor│    │ • Competitor│    │   Analysis  │
     └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
 
     Data Flow: Step 1 → Step 2 → Step 3 → Step 4 (each step builds on previous)
+    Cache Flow: Browser Storage ↔ Cache Layer ↔ Database Persistence
 ```
 
-**Step Flow**: Basic Data → Process Definition → Material Properties → Review & Calculate
+#### Session Storage & Cache Architecture
 
-**State Management**: Session storage, validation checkpoints, error recovery
+```
+                        Session Management Flow
+
+    ┌─────────────────────────────────────────────────────────────────┐
+    │                     Frontend (Vue.js)                           │
+    │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐  │
+    │  │ Local Storage   │  │ Session Storage │  │ Vuex Store      │  │
+    │  │ • User Prefs    │  │ • Current Step  │  │ • Wizard State  │  │
+    │  │ • Form Drafts   │  │ • Form Data     │  │ • Validation    │  │
+    │  └─────────────────┘  └─────────────────┘  └─────────────────┘  │
+    └─────────────────┬───────────────────────────────────────────────┘
+                      │ HTTPS API Calls
+                      ▼
+    ┌─────────────────────────────────────────────────────────────────┐
+    │                     Backend (NestJS)                            │
+    │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐  │
+    │  │ Session Service │  │ Wizard Manager  │  │ Cache Manager   │  │
+    │  └─────────────────┘  └─────────────────┘  └─────────────────┘  │
+    └─────────────────┬───────────────────┬───────────────────────────┘
+                      │                   │
+          ┌───────────▼───────────┐      ┌▼─────────────────┐
+          │     Cache Layer       │      │   Database       │
+          │ • Session Data        │      │ • Completed      │
+          │ • Step Progress       │      │   Calculations   │
+          │ • Form Recovery       │      │ • User Data      │
+          └───────────────────────┘      └──────────────────┘
+```
+
+**Key Features**:
+
+- **Auto-save**: Automatic progress saving at each step
+- **Recovery**: Users can resume incomplete wizards
+- **Multi-layer storage**: Browser, cache, and database persistence
+- **Session management**: Secure session handling with timeout recovery
 
 ### Infrastructure & Deployment Architecture
 
@@ -263,7 +307,7 @@ The application will be deployed on a **private VMware server environment** usin
 | **Frontend** | Vue.js 3 + Nginx | Static file serving, SPA routing | 1GB RAM, 1 CPU   |
 | **Backend**  | NestJS + Node.js | API services, business logic     | 2GB RAM, 2 CPU   |
 | **Database** | PostgreSQL 15    | Primary data storage             | 4GB RAM, 2 CPU   |
-| **Cache**    | Redis 7          | Session & calculation cache      | 1GB RAM, 1 CPU   |
+| **Cache**    | Cache Layer      | Session & performance cache      | 1GB RAM, 1 CPU   |
 | **Proxy**    | Nginx/Traefik    | Load balancing, SSL termination  | 512MB RAM, 1 CPU |
 
 #### Database Strategy
@@ -276,13 +320,11 @@ The application will be deployed on a **private VMware server environment** usin
 - Automated backup and recovery
 - Schema migrations and data management
 
-**Cache Database (Redis 7)**:
+**Cache Layer**:
 
-- User session management
-- Calculation result caching
-- External API response caching
-- Rate limiting counters
-- Background job queue
+- Session storage and recovery
+- Performance optimization
+- Temporary data management
 
 #### External System Integration
 
@@ -392,7 +434,7 @@ The application will be deployed on a **private VMware server environment** usin
 | Scenario        | Duration | Person-Days | Risk Level  | Recommended Use             |
 | --------------- | -------- | ----------- | ----------- | --------------------------- |
 | **Optimistic**  | 18 weeks | 250 days    | High risk   | Best-case planning          |
-| **Realistic**   | 22 weeks | 305 days    | Medium risk | **Primary planning target** |
+| **Realistic**   | 24 weeks | 329 days    | Medium risk | **Primary planning target** |
 | **Pessimistic** | 26 weeks | 360 days    | Low risk    | Risk mitigation planning    |
 
 ### Detailed Breakdown (Realistic Scenario)
@@ -402,15 +444,15 @@ The application will be deployed on a **private VMware server environment** usin
 | **Setup & Architecture**    | 4 days      | 8 days       | 5 days       | 3 days      | 20 days      | 3 weeks      |
 | **Infrastructure Setup**    | 1 day       | 2 days       | 6 days       | 1 day       | 10 days      | 1.5 weeks    |
 | **Authentication**          | 3 days      | 5 days       | 2 days       | 1 day       | 11 days      | 1.5 weeks    |
-| **Input Wizards + i18n**    | 25 days     | 10 days      | 1 day        | 4 days      | 40 days      | 4.5 weeks    |
+| **Input Wizards + Session** | 30 days     | 15 days      | 2 days       | 5 days      | 52 days      | 5.5 weeks    |
 | **Calculation Engine**      | 15 days     | 55 days      | 1 day        | 10 days     | 81 days      | 8 weeks      |
 | **External Integrations**   | 4 days      | 14 days      | 2 days       | 2 days      | 22 days      | 3 weeks      |
 | **Export Functionality**    | 5 days      | 10 days      | 1 day        | 2 days      | 18 days      | 2.5 weeks    |
 | **Save Feature**            | 3 days      | 5 days       | 1 day        | 1 day       | 10 days      | 1 week       |
 | **Testing & QA**            | 8 days      | 12 days      | 4 days       | 3 days      | 27 days      | 4 weeks      |
 | **Deployment & Monitoring** | 2 days      | 3 days       | 8 days       | 2 days      | 15 days      | 2 weeks      |
-| **Contingency (20%)**       | 14 days     | 25 days      | 6 days       | 6 days      | 51 days      | -            |
-| **TOTAL**                   | **84 days** | **149 days** | **37 days**  | **35 days** | **305 days** | **22 weeks** |
+| **Contingency (20%)**       | 16 days     | 27 days      | 7 days       | 7 days      | 57 days      | -            |
+| **TOTAL**                   | **94 days** | **159 days** | **39 days**  | **37 days** | **329 days** | **24 weeks** |
 
 ### Optional Designer Allocation
 
@@ -422,32 +464,32 @@ The application will be deployed on a **private VMware server environment** usin
 | **User Testing Support**     | 2 days        | Weeks 13-14            |
 | **TOTAL (Optional)**         | **11 days**   | **Throughout project** |
 
-### Project Timeline (Realistic Scenario - 22 Weeks)
+### Project Timeline (Realistic Scenario - 24 Weeks)
 
 ```
-    Week:  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
-           |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+    Week:  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
+           |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
 Infrastructure Setup:
-    [██████]                                                              (2 weeks)
+    [██████]                                                                      (2 weeks)
 
 Project Setup & Auth:
-    [████████████████]                                                    (4 weeks)
+    [████████████████]                                                            (4 weeks)
 
-Input Wizards:
-                      [████████████████████]                              (5 weeks)
+Input Wizards + Session:
+                      [██████████████████████████]                                (6 weeks)
 
 Calculation Engine:
-                                        [████████████████████████████████████] (9 weeks)
+                                          [████████████████████████████████████] (9 weeks)
 
 Integration & Export:
-                                                                      [████████] (2 weeks)
+                                                                          [████████] (2 weeks)
 
 Testing & QA (Parallel):
-                                                                      [████████████] (3 weeks)
+                                                                          [████████████] (3 weeks)
 
 Deployment:
-                                                                            [████] (2 weeks)
+                                                                                [████] (2 weeks)
 
 Legend: [██] = Active Development Phase
 ```
@@ -589,7 +631,7 @@ Legend: [██] = Active Development Phase
 | Scenario        | Timeline | Person-Days | Risk Level  | Recommendation        |
 | --------------- | -------- | ----------- | ----------- | --------------------- |
 | **Optimistic**  | 18 weeks | 250 days    | High risk   | Aggressive timeline   |
-| **Realistic**   | 22 weeks | 305 days    | Medium risk | **Recommended**       |
+| **Realistic**   | 24 weeks | 329 days    | Medium risk | **Recommended**       |
 | **Pessimistic** | 26 weeks | 360 days    | Low risk    | Conservative approach |
 
 ---
@@ -624,4 +666,4 @@ This rough estimation provides a foundation for project planning while acknowled
 
 **Process**: Task Definition & Refinement → Development → QA (parallel) → Release Candidate
 
-**Recommendation**: 22 weeks with 305 person-days and 5-person team, with 20% contingency buffer included. Timeline reflects formula complexity and infrastructure requirements for Docker containerization and private VM deployment.
+**Recommendation**: 24 weeks with 329 person-days and 5-person team, with 20% contingency buffer included. Timeline reflects formula complexity, session management requirements, and infrastructure requirements for Docker containerization and private VM deployment.
