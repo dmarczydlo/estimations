@@ -20,9 +20,11 @@ Based on comprehensive analysis of the MAGIC_V1.2.4c Excel workbook (analyzed Se
 
 | Complexity Level | Count | Percentage | Migration Effort                           |
 | ---------------- | ----- | ---------- | ------------------------------------------ |
-| **Simple**       | 329   | 31.2%      | Low risk - 1-2 person-days per 10 formulas |
+| **Simple**       | 329   | 31.2%      | Low risk - 0.1-0.2 person-days per formula |
 | **Medium**       | 303   | 28.7%      | Medium risk - 0.5-1 person-day per formula |
-| **Complex**      | 424   | 40.2%      | High risk - 1-2 person-days per formula    |
+| **Complex**      | 424   | 40.2%      | High risk - 1-3 person-days per formula    |
+
+**Note**: Many formulas are duplicated or similar patterns across worksheets. Identical formulas require only one implementation that can be reused, significantly reducing actual migration effort. The estimates above represent unique formula patterns, not total formula instances.
 
 ### Key Analysis Findings
 
