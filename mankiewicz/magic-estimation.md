@@ -8,7 +8,7 @@ This document provides a **rough estimation** for replacing the existing Excel w
 
 **Preferred Contract Type**: Time & Material
 
-**Key Recommendation**: **24 weeks (6 months)** with **329 person-days** and **5-person team**
+**Key Recommendation**: **22 weeks (5.5 months)** with **302 person-days** and **5-person team**
 
 ---
 
@@ -434,7 +434,7 @@ The application will be deployed on a **private VMware server environment** usin
 | Scenario        | Duration | Person-Days | Risk Level  | Recommended Use             |
 | --------------- | -------- | ----------- | ----------- | --------------------------- |
 | **Optimistic**  | 18 weeks | 250 days    | High risk   | Best-case planning          |
-| **Realistic**   | 24 weeks | 329 days    | Medium risk | **Primary planning target** |
+| **Realistic**   | 22 weeks | 302 days    | Medium risk | **Primary planning target** |
 | **Pessimistic** | 26 weeks | 360 days    | Low risk    | Risk mitigation planning    |
 
 ### Detailed Breakdown (Realistic Scenario)
@@ -451,8 +451,8 @@ The application will be deployed on a **private VMware server environment** usin
 | **Save Feature**            | 3 days      | 5 days       | 1 day        | 1 day       | 10 days      | 1 week       |
 | **Testing & QA**            | 8 days      | 12 days      | 4 days       | 3 days      | 27 days      | 4 weeks      |
 | **Deployment & Monitoring** | 2 days      | 3 days       | 8 days       | 2 days      | 15 days      | 2 weeks      |
-| **Contingency (20%)**       | 16 days     | 27 days      | 7 days       | 7 days      | 57 days      | -            |
-| **TOTAL**                   | **94 days** | **159 days** | **39 days**  | **37 days** | **329 days** | **24 weeks** |
+| **Contingency (18%)**       | 14 days     | 24 days      | 6 days       | 6 days      | 50 days      | -            |
+| **TOTAL**                   | **89 days** | **146 days** | **36 days**  | **31 days** | **302 days** | **22 weeks** |
 
 ### Optional Designer Allocation
 
@@ -464,32 +464,32 @@ The application will be deployed on a **private VMware server environment** usin
 | **User Testing Support**     | 2 days        | Weeks 13-14            |
 | **TOTAL (Optional)**         | **11 days**   | **Throughout project** |
 
-### Project Timeline (Realistic Scenario - 24 Weeks)
+### Project Timeline (Realistic Scenario - 22 Weeks)
 
 ```
-    Week:  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24
-           |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+    Week:  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22
+           |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 
 Infrastructure Setup:
-    [██████]                                                                      (2 weeks)
+    [██████]                                                                (2 weeks)
 
 Project Setup & Auth:
-    [████████████████]                                                            (4 weeks)
+    [████████████████]                                                      (4 weeks)
 
 Input Wizards + Session:
-                      [██████████████████████████]                                (6 weeks)
+                      [██████████████████████████]                          (6 weeks)
 
 Calculation Engine:
-                                          [████████████████████████████████████] (9 weeks)
+                                          [██████████████████████████████] (8 weeks)
 
 Integration & Export:
-                                                                          [████████] (2 weeks)
+                                                                    [████████] (2 weeks)
 
 Testing & QA (Parallel):
-                                                                          [████████████] (3 weeks)
+                                                                    [████████████] (3 weeks)
 
 Deployment:
-                                                                                [████] (2 weeks)
+                                                                          [████] (2 weeks)
 
 Legend: [██] = Active Development Phase
 ```
@@ -631,7 +631,7 @@ Legend: [██] = Active Development Phase
 | Scenario        | Timeline | Person-Days | Risk Level  | Recommendation        |
 | --------------- | -------- | ----------- | ----------- | --------------------- |
 | **Optimistic**  | 18 weeks | 250 days    | High risk   | Aggressive timeline   |
-| **Realistic**   | 24 weeks | 329 days    | Medium risk | **Recommended**       |
+| **Realistic**   | 22 weeks | 302 days    | Medium risk | **Recommended**       |
 | **Pessimistic** | 26 weeks | 360 days    | Low risk    | Conservative approach |
 
 ---
@@ -666,4 +666,4 @@ This rough estimation provides a foundation for project planning while acknowled
 
 **Process**: Task Definition & Refinement → Development → QA (parallel) → Release Candidate
 
-**Recommendation**: 24 weeks with 329 person-days and 5-person team, with 20% contingency buffer included. Timeline reflects formula complexity, session management requirements, and infrastructure requirements for Docker containerization and private VM deployment.
+**Recommendation**: 22 weeks with 302 person-days and 5-person team, with 18% contingency buffer included. Timeline reflects formula complexity, session management requirements, and infrastructure requirements for Docker containerization and private VM deployment.
