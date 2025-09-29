@@ -101,7 +101,7 @@ A modern web application that replicates Excel functionality while providing:
 
 #### Frontend Technology Options
 
-**Option A: Vue.js 3 (Primary Recommendation)**
+**Option A: Vue.js 3**
 
 - Vue.js 3 with Composition API
 - TypeScript integration
@@ -110,7 +110,7 @@ A modern web application that replicates Excel functionality while providing:
 - Tailwind CSS for styling
 - Faster development with simpler learning curve
 
-**Option B: React 18 (Alternative)**
+**Option B: React 18**
 
 - React 18 with functional components and hooks
 - TypeScript integration
