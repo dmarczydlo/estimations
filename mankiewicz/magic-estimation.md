@@ -378,36 +378,6 @@ The application will be deployed on a **private VMware server environment** usin
 
 ---
 
-## Frontend Technology Decision
-
-The frontend application can be built using either **Vue.js 3** or **React 18**. Both frameworks provide equivalent functionality and maintain the same 22-week development timeline.
-
-### Option A: Vue.js 3
-
-**Key Benefits:**
-
-- Faster development with simpler learning curve
-- Excellent TypeScript integration
-- Ideal for wizard/form-heavy applications
-- Smaller bundle size and faster initial load
-
-**Technology Stack:** Vue.js 3, Pinia (state management), Vue Router, Tailwind CSS
-
-### Option B: React 18
-
-**Key Benefits:**
-
-- Larger ecosystem and community
-- Wider talent pool availability
-- More third-party components
-- Common choice for enterprise applications
-
-**Technology Stack:** React 18, Redux Toolkit/Zustand (state management), React Router, Tailwind CSS
-
-**Client Decision Required:** Please specify your preferred frontend framework based on your team expertise and organizational preferences.
-
----
-
 ## Team Composition
 
 ### Core Development Team (5 people)
