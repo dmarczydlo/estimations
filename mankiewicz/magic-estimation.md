@@ -99,6 +99,28 @@ A modern web application that replicates Excel functionality while providing:
 - Session management and recovery system
 - Basic monitoring and logging
 
+#### Frontend Technology Options
+
+**Option A: Vue.js 3 (Primary Recommendation)**
+
+- Vue.js 3 with Composition API
+- TypeScript integration
+- Pinia for state management
+- Vue Router for navigation
+- Tailwind CSS for styling
+- Faster development with simpler learning curve
+
+**Option B: React 18 (Alternative)**
+
+- React 18 with functional components and hooks
+- TypeScript integration
+- Redux Toolkit or Zustand for state management
+- React Router for navigation
+- Tailwind CSS or styled-components for styling
+- Larger ecosystem and community support
+
+_Both options provide equivalent functionality with similar development timeline. Choice depends on team expertise and organizational preferences._
+
 ### 🚫 **Excluded from MVP (Future Phases)**
 
 #### Not in MVP
@@ -171,15 +193,16 @@ A modern web application that replicates Excel functionality while providing:
 #### Detailed Application Architecture
 
 ```
-                    Frontend Container
-    ┌──────────────────────────────────────────────┐
-    │            Presentation Layer                │
-    │  ┌─────────────────┐ ┌─────────────────────┐ │
-    │  │ Vue.js 3 SPA    │ │ Responsive UI       │ │
-    │  │ TypeScript      │ │ PWA Ready           │ │
-    │  │ i18n Support    │ │ Offline Capable     │ │
-    │  └─────────────────┘ └─────────────────────┘ │
-    └─────────────────┬────────────────────────────┘
+                    Frontend Container (Vue.js or React)
+    ┌──────────────────────────────────────────────────────┐
+    │                Presentation Layer                    │
+    │  ┌─────────────────────────┐ ┌─────────────────────┐ │
+    │  │ Frontend Framework      │ │ Responsive UI       │ │
+    │  │ • Vue.js 3 + Pinia      │ │ PWA Ready           │ │
+    │  │ • React 18 + Redux      │ │ Offline Capable     │ │
+    │  │ TypeScript + i18n       │ │ Cross-platform      │ │
+    │  └─────────────────────────┘ └─────────────────────┘ │
+    └─────────────────┬────────────────────────────────────┘
                       │ HTTPS/REST API
                       ▼
                 Backend Container
@@ -304,13 +327,13 @@ The application will be deployed on a **private VMware server environment** usin
 
 #### Container Architecture
 
-| Container    | Technology       | Purpose                          | Resources        |
-| ------------ | ---------------- | -------------------------------- | ---------------- |
-| **Frontend** | Vue.js 3 + Nginx | Static file serving, SPA routing | 1GB RAM, 1 CPU   |
-| **Backend**  | NestJS + Node.js | API services, business logic     | 2GB RAM, 2 CPU   |
-| **Database** | PostgreSQL 15    | Primary data storage             | 4GB RAM, 2 CPU   |
-| **Cache**    | Cache Layer      | Session & performance cache      | 1GB RAM, 1 CPU   |
-| **Proxy**    | Nginx/Traefik    | Load balancing, SSL termination  | 512MB RAM, 1 CPU |
+| Container    | Technology Options           | Purpose                          | Resources        |
+| ------------ | ---------------------------- | -------------------------------- | ---------------- |
+| **Frontend** | Vue.js 3 or React 18 + Nginx | Static file serving, SPA routing | 1GB RAM, 1 CPU   |
+| **Backend**  | NestJS + Node.js             | API services, business logic     | 2GB RAM, 2 CPU   |
+| **Database** | PostgreSQL 15                | Primary data storage             | 4GB RAM, 2 CPU   |
+| **Cache**    | Cache Layer                  | Session & performance cache      | 1GB RAM, 1 CPU   |
+| **Proxy**    | Nginx/Traefik                | Load balancing, SSL termination  | 512MB RAM, 1 CPU |
 
 #### Database Strategy
 
@@ -355,6 +378,96 @@ The application will be deployed on a **private VMware server environment** usin
 
 ---
 
+## Frontend Technology Decision
+
+### Framework Comparison: Vue.js vs React
+
+#### Option A: Vue.js 3 (Primary Recommendation)
+
+**Advantages:**
+
+- **Faster Development**: Simpler learning curve and quicker setup
+- **Built-in TypeScript Support**: Excellent TypeScript integration out of the box
+- **Composition API**: Clean, logical component structure ideal for wizard flows
+- **Smaller Bundle Size**: Better performance for initial load times
+- **Vue Router & Pinia**: Official ecosystem tools provide consistency
+- **Template Syntax**: HTML-like templates easier for rapid prototyping
+
+**Technical Stack:**
+
+- Vue.js 3 with Composition API
+- Pinia for state management (wizard step data)
+- Vue Router for navigation
+- Vue I18n for internationalization
+- Vite for build tooling
+- Tailwind CSS for styling
+
+**Best Fit For:**
+
+- Rapid development timeline
+- Teams with mixed frontend experience
+- Form-heavy applications (wizards)
+- Smaller to medium complexity projects
+
+#### Option B: React 18 (Alternative)
+
+**Advantages:**
+
+- **Larger Ecosystem**: More third-party libraries and components
+- **Market Adoption**: Wider talent pool and community support
+- **Concurrent Features**: Better performance for complex UI updates
+- **Enterprise Adoption**: More common in large organizations
+- **Flexibility**: Multiple state management and routing options
+
+**Technical Stack:**
+
+- React 18 with functional components and hooks
+- Redux Toolkit or Zustand for state management
+- React Router for navigation
+- react-i18next for internationalization
+- Webpack or Vite for build tooling
+- Tailwind CSS or styled-components for styling
+
+**Best Fit For:**
+
+- Teams with strong React experience
+- Long-term enterprise projects
+- Complex state management requirements
+- Existing React ecosystem integration
+
+### Decision Matrix
+
+| Criteria                   | Vue.js 3   | React 18   | Winner |
+| -------------------------- | ---------- | ---------- | ------ |
+| **Development Speed**      | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | Vue.js |
+| **Learning Curve**         | ⭐⭐⭐⭐⭐ | ⭐⭐⭐     | Vue.js |
+| **TypeScript Integration** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | Vue.js |
+| **Ecosystem Size**         | ⭐⭐⭐     | ⭐⭐⭐⭐⭐ | React  |
+| **Performance**            | ⭐⭐⭐⭐   | ⭐⭐⭐⭐   | Tie    |
+| **Team Availability**      | ⭐⭐⭐     | ⭐⭐⭐⭐⭐ | React  |
+| **Documentation**          | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | Vue.js |
+| **Wizard/Form Handling**   | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | Vue.js |
+
+### Recommendation
+
+**Primary Choice: Vue.js 3** for the following reasons:
+
+1. **Timeline Alignment**: Faster development cycle fits 22-week target
+2. **Wizard-Focused**: Excellent for multi-step form applications
+3. **Learning Curve**: Easier onboarding for mixed-skill teams
+4. **TypeScript Excellence**: Superior TypeScript integration for type safety
+5. **Bundle Size**: Better performance for manufacturing/industrial users
+
+**Alternative: React 18** is viable if:
+
+- Team has strong React expertise
+- Organization has React standards
+- Long-term maintenance by React-focused team
+
+_Both options maintain the same 22-week timeline and deliver equivalent functionality._
+
+---
+
 ## Team Composition
 
 ### Core Development Team (5 people)
@@ -367,9 +480,11 @@ The application will be deployed on a **private VMware server environment** usin
 
 #### Frontend Developer (1 person)
 
-- **Responsibilities**: Vue.js application, input wizards, user interface, i18n implementation
-- **Skills Required**: Vue.js 3, TypeScript, responsive design, internationalization
+- **Responsibilities**: Frontend application, input wizards, user interface, i18n implementation
+- **Skills Required (Option A - Vue.js)**: Vue.js 3, Composition API, Pinia, TypeScript, responsive design, internationalization
+- **Skills Required (Option B - React)**: React 18, Hooks, Redux Toolkit/Zustand, TypeScript, responsive design, internationalization
 - **Time Allocation**: 50-66 days (primary focus on wizard development)
+- **Note**: Development timeline remains consistent regardless of framework choice
 
 #### Backend Developer (1 person)
 
