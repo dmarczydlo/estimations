@@ -380,91 +380,31 @@ The application will be deployed on a **private VMware server environment** usin
 
 ## Frontend Technology Decision
 
-### Framework Comparison: Vue.js vs React
+The frontend application can be built using either **Vue.js 3** or **React 18**. Both frameworks provide equivalent functionality and maintain the same 22-week development timeline.
 
-#### Option A: Vue.js 3 (Primary Recommendation)
+### Option A: Vue.js 3
 
-**Advantages:**
+**Key Benefits:**
 
-- **Faster Development**: Simpler learning curve and quicker setup
-- **Built-in TypeScript Support**: Excellent TypeScript integration out of the box
-- **Composition API**: Clean, logical component structure ideal for wizard flows
-- **Smaller Bundle Size**: Better performance for initial load times
-- **Vue Router & Pinia**: Official ecosystem tools provide consistency
-- **Template Syntax**: HTML-like templates easier for rapid prototyping
+- Faster development with simpler learning curve
+- Excellent TypeScript integration
+- Ideal for wizard/form-heavy applications
+- Smaller bundle size and faster initial load
 
-**Technical Stack:**
+**Technology Stack:** Vue.js 3, Pinia (state management), Vue Router, Tailwind CSS
 
-- Vue.js 3 with Composition API
-- Pinia for state management (wizard step data)
-- Vue Router for navigation
-- Vue I18n for internationalization
-- Vite for build tooling
-- Tailwind CSS for styling
+### Option B: React 18
 
-**Best Fit For:**
+**Key Benefits:**
 
-- Rapid development timeline
-- Teams with mixed frontend experience
-- Form-heavy applications (wizards)
-- Smaller to medium complexity projects
+- Larger ecosystem and community
+- Wider talent pool availability
+- More third-party components
+- Common choice for enterprise applications
 
-#### Option B: React 18 (Alternative)
+**Technology Stack:** React 18, Redux Toolkit/Zustand (state management), React Router, Tailwind CSS
 
-**Advantages:**
-
-- **Larger Ecosystem**: More third-party libraries and components
-- **Market Adoption**: Wider talent pool and community support
-- **Concurrent Features**: Better performance for complex UI updates
-- **Enterprise Adoption**: More common in large organizations
-- **Flexibility**: Multiple state management and routing options
-
-**Technical Stack:**
-
-- React 18 with functional components and hooks
-- Redux Toolkit or Zustand for state management
-- React Router for navigation
-- react-i18next for internationalization
-- Webpack or Vite for build tooling
-- Tailwind CSS or styled-components for styling
-
-**Best Fit For:**
-
-- Teams with strong React experience
-- Long-term enterprise projects
-- Complex state management requirements
-- Existing React ecosystem integration
-
-### Decision Matrix
-
-| Criteria                   | Vue.js 3   | React 18   | Winner |
-| -------------------------- | ---------- | ---------- | ------ |
-| **Development Speed**      | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | Vue.js |
-| **Learning Curve**         | ⭐⭐⭐⭐⭐ | ⭐⭐⭐     | Vue.js |
-| **TypeScript Integration** | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | Vue.js |
-| **Ecosystem Size**         | ⭐⭐⭐     | ⭐⭐⭐⭐⭐ | React  |
-| **Performance**            | ⭐⭐⭐⭐   | ⭐⭐⭐⭐   | Tie    |
-| **Team Availability**      | ⭐⭐⭐     | ⭐⭐⭐⭐⭐ | React  |
-| **Documentation**          | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | Vue.js |
-| **Wizard/Form Handling**   | ⭐⭐⭐⭐⭐ | ⭐⭐⭐⭐   | Vue.js |
-
-### Recommendation
-
-**Primary Choice: Vue.js 3** for the following reasons:
-
-1. **Timeline Alignment**: Faster development cycle fits 22-week target
-2. **Wizard-Focused**: Excellent for multi-step form applications
-3. **Learning Curve**: Easier onboarding for mixed-skill teams
-4. **TypeScript Excellence**: Superior TypeScript integration for type safety
-5. **Bundle Size**: Better performance for manufacturing/industrial users
-
-**Alternative: React 18** is viable if:
-
-- Team has strong React expertise
-- Organization has React standards
-- Long-term maintenance by React-focused team
-
-_Both options maintain the same 22-week timeline and deliver equivalent functionality._
+**Client Decision Required:** Please specify your preferred frontend framework based on your team expertise and organizational preferences.
 
 ---
 
