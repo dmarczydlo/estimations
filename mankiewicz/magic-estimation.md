@@ -101,18 +101,18 @@ A modern web application that replicates Excel functionality while providing:
 
 #### Frontend Technology Options
 
-**Option A: Vue.js 3**
+**Option A: Vue.js**
 
-- Vue.js 3 with Composition API
+- Vue.js with Composition API
 - TypeScript integration
 - Pinia for state management
 - Vue Router for navigation
 - Tailwind CSS for styling
 - Faster development with simpler learning curve
 
-**Option B: React 18**
+**Option B: React**
 
-- React 18 with functional components and hooks
+- React with functional components and hooks
 - TypeScript integration
 - Redux Toolkit or Zustand for state management
 - React Router for navigation
@@ -198,8 +198,8 @@ _Both options provide equivalent functionality with similar development timeline
     │                Presentation Layer                    │
     │  ┌─────────────────────────┐ ┌─────────────────────┐ │
     │  │ Frontend Framework      │ │ Responsive UI       │ │
-    │  │ • Vue.js 3 + Pinia      │ │ PWA Ready           │ │
-    │  │ • React 18 + Redux      │ │ Offline Capable     │ │
+    │  │ • Vue.js + Pinia        │ │ PWA Ready           │ │
+    │  │ • React + Redux         │ │ Offline Capable     │ │
     │  │ TypeScript + i18n       │ │ Cross-platform      │ │
     │  └─────────────────────────┘ └─────────────────────┘ │
     └─────────────────┬────────────────────────────────────┘
@@ -327,13 +327,13 @@ The application will be deployed on a **private VMware server environment** usin
 
 #### Container Architecture
 
-| Container    | Technology Options           | Purpose                          | Resources        |
-| ------------ | ---------------------------- | -------------------------------- | ---------------- |
-| **Frontend** | Vue.js 3 or React 18 + Nginx | Static file serving, SPA routing | 1GB RAM, 1 CPU   |
-| **Backend**  | NestJS + Node.js             | API services, business logic     | 2GB RAM, 2 CPU   |
-| **Database** | PostgreSQL 15                | Primary data storage             | 4GB RAM, 2 CPU   |
-| **Cache**    | Cache Layer                  | Session & performance cache      | 1GB RAM, 1 CPU   |
-| **Proxy**    | Nginx/Traefik                | Load balancing, SSL termination  | 512MB RAM, 1 CPU |
+| Container    | Technology Options      | Purpose                          | Resources        |
+| ------------ | ----------------------- | -------------------------------- | ---------------- |
+| **Frontend** | Vue.js or React + Nginx | Static file serving, SPA routing | 1GB RAM, 1 CPU   |
+| **Backend**  | NestJS + Node.js        | API services, business logic     | 2GB RAM, 2 CPU   |
+| **Database** | PostgreSQL 15           | Primary data storage             | 4GB RAM, 2 CPU   |
+| **Cache**    | Cache Layer             | Session & performance cache      | 1GB RAM, 1 CPU   |
+| **Proxy**    | Nginx/Traefik           | Load balancing, SSL termination  | 512MB RAM, 1 CPU |
 
 #### Database Strategy
 
@@ -391,8 +391,8 @@ The application will be deployed on a **private VMware server environment** usin
 #### Frontend Developer (1 person)
 
 - **Responsibilities**: Frontend application, input wizards, user interface, i18n implementation
-- **Skills Required (Option A - Vue.js)**: Vue.js 3, Composition API, Pinia, TypeScript, responsive design, internationalization
-- **Skills Required (Option B - React)**: React 18, Hooks, Redux Toolkit/Zustand, TypeScript, responsive design, internationalization
+- **Skills Required (Option A - Vue.js)**: Vue.js, Composition API, Pinia, TypeScript, responsive design, internationalization
+- **Skills Required (Option B - React)**: React, Hooks, Redux Toolkit/Zustand, TypeScript, responsive design, internationalization
 - **Time Allocation**: 50-66 days (primary focus on wizard development)
 - **Note**: Development timeline remains consistent regardless of framework choice
 
