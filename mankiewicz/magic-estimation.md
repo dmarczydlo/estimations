@@ -643,6 +643,18 @@ Legend: [██] = Active Development Phase
    - **Impact**: Additional UI/UX iterations
    - **Mitigation**: Regular user feedback, iterative design
 
+4. **Frontend Performance** (Probability: Medium)
+   - **Impact**: Large datasets in input steps (materials, competitor comparisons, cost structures) may cause slow rendering, affecting the user experience.
+   - **Mitigation**: Implement performance optimizations, including virtualization of large lists/tables, lazy data loading, and efficient state management. Include automated tests for performance to detect issues early.
+
+5. **Frontend Validation** (Probability: Medium)
+    - **Impact**: Inadequate input validation or error handling may result in calculation errors, incomplete sessions, or user frustration.
+    - **Mitigation**: Enhance validation rules with both synchronous (immediate user feedback) and asynchronous (backend consistency checks) mechanisms, and ensure comprehensive error handling with clear messages and recovery options.
+
+6. **Frontend i18n Gaps** (Probability: Low)
+    - **Impact**: Lack of proper internationalization (i18n) support may limit usability for global users, causing incorrect formatting, untranslated content, or misinterpretation of data.
+    - **Mitigation**: Integrate i18n early in the development to support multi-language input, display, and formatting.
+
 ### Contingency Planning
 
 - **Time Contingency**: 20% buffer included in realistic estimate
